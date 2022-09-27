@@ -1,13 +1,7 @@
-import {
-  Body,
-  Controller,
-  Get,
-  Param,
-  ParseIntPipe,
-  Post,
-} from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { Product } from 'src/entities/product.entitie';
 import { ProductsService } from '../../serivices/products/products.service';
+import { ParseIntPipe } from '../../common/parse-int.pipe';
 
 @Controller('products')
 export class ProductsController {
