@@ -2,6 +2,7 @@ import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { Product } from 'src/entities/product.entitie';
 import { ProductsService } from '../../serivices/products/products.service';
 import { ParseIntPipe } from '../../common/parse-int.pipe';
+import { CreateProductDto } from '../../dtos/products.dtos';
 
 @Controller('products')
 export class ProductsController {
@@ -15,7 +16,7 @@ export class ProductsController {
     return await this.productsService.findOne(id);
   }
   @Post()
-  async create(@Body() payload: any): Promise<Product> {
+  async create(@Body() payload: CreateProductDto): Promise<Product> {
     return await this.productsService.create(payload);
   }
 }
