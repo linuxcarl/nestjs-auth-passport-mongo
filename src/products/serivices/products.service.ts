@@ -4,7 +4,7 @@ import { Product } from '../entities/product.entitie';
 
 @Injectable()
 export class ProductsService {
-  private counter: number = 2;
+  private counter = 2;
   private products: Product[] = [
     {
       id: 1,
