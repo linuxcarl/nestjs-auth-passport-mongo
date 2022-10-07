@@ -25,6 +25,7 @@ import * as Joi from 'joi';
         DB_USER: Joi.string().required(),
         DB_PASS: Joi.string().required(),
         API_KEY: Joi.string().required(),
+        PORT: Joi.number().required(),
       }),
     }),
   ],
