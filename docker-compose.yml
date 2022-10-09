@@ -3,7 +3,7 @@ services:
   mongo:
     image: mongo:4.4.4
     environment:
-      - MONGO_INITDB_DATABASE=nestjs_mongo
+      - MONGO_INITDB_DATABASE=platzi-store
       - MONGO_INITDB_ROOT_USERNAME=mongo
       - MONGO_INITDB_ROOT_PASSWORD=secret
     ports:

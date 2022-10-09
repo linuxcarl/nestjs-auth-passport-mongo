@@ -1,16 +1,33 @@
 import { Module, Global } from '@nestjs/common';
-
-const API_KEY = 'API KEY DEVELOPER';
-const API_KEY_PROD = 'API KEY PROD';
-
+import { MongoClient } from 'mongodb';
+import { ConfigType } from '@nestjs/config';
+import config_enviroments from 'src/config_enviroments';
 @Global()
 @Module({
   providers: [
     {
-      provide: 'API_KEY',
-      useValue: process.env.NODE_ENV === 'prod' ? API_KEY_PROD : API_KEY,
+      provide: 'MONGO',
+      useFactory: async (
+        configService: ConfigType<typeof config_enviroments>,
+      ) => {
+        const {
+          MONGO_BBDD,
+          MONGO_CONF,
+          MONGO_HOST,
+          MONGO_PORT,
+          // MONGO_PASS,
+          // MONGO_USER,
+        } = configService.db_mongo;
+        // const uriProd = `${MONGO_CONF}://${MONGO_USER}:${MONGO_PASS}@${MONGO_HOST}:${MONGO_PORT}/`;
+        const uri = `${MONGO_CONF}://${MONGO_HOST}:${MONGO_PORT}/`;
+        const client = new MongoClient(uri);
+        await client.connect();
+        const database = client.db(MONGO_BBDD);
+        return database;
+      },
+      inject: [config_enviroments.KEY],
     },
   ],
-  exports: ['API_KEY'],
+  exports: ['MONGO'],
 })
 export class DatabaseModule {}
