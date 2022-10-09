@@ -2,8 +2,22 @@ import { Module, Global } from '@nestjs/common';
 import { MongoClient } from 'mongodb';
 import { ConfigType } from '@nestjs/config';
 import config_enviroments from 'src/config_enviroments';
+import { MongooseModule } from '@nestjs/mongoose';
 @Global()
 @Module({
+  imports: [
+    MongooseModule.forRootAsync({
+      useFactory: (configService: ConfigType<typeof config_enviroments>) => {
+        const { MONGO_BBDD, MONGO_CONF, MONGO_HOST, MONGO_PORT } =
+          configService.db_mongo;
+        return {
+          uri: `${MONGO_CONF}://${MONGO_HOST}:${MONGO_PORT}`,
+          dbName: MONGO_BBDD,
+        };
+      },
+      inject: [config_enviroments.KEY],
+    }),
+  ],
   providers: [
     {
       provide: 'MONGO',
