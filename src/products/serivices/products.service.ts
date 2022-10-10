@@ -1,49 +1,40 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { CreateProductDto } from '../dtos/products.dtos';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { CreateProductDto, UpdateProductDto } from '../dtos/products.dtos';
 import { Product } from '../entities/product.entitie';
 
 @Injectable()
 export class ProductsService {
-  private counter = 2;
-  private products: Product[] = [
-    {
-      id: 1,
-      name: 'celular',
-      description: 'celular de 6 pulgadas',
-      price: 1000,
-      stock: 20,
-      image: '',
-    },
-    {
-      id: 2,
-      name: 'celular3',
-      description: 'celular de 6 pulgadas xiaomi',
-      price: 1000,
-      stock: 20,
-      image: '',
-    },
-  ];
-  findAll(): Product[] {
-    return this.products;
+  constructor(
+    @InjectModel(Product.name) private productModel: Model<Product>,
+  ) {}
+  async findAll() {
+    return await this.productModel.find().exec();
   }
-  findOne(id: number): Product {
-    const product = this.products.find((item) => item.id === id);
+  async findOne(id: string) {
+    const product = await this.productModel.findById(id).exec();
     if (!product) {
       throw new NotFoundException(`Product #${id} not found`);
     }
     return product;
   }
-  create(product: CreateProductDto): Product {
-    this.counter++;
-    const newProduct = { id: this.counter, ...product };
-    this.products.push({ ...newProduct });
+  async create(product: CreateProductDto): Promise<Product> {
+    const newProduct = await this.productModel.create(product);
     return newProduct;
   }
-  update(id: number, changes: Product): Product {
-    const product = this.findOne(id);
-    if (product) {
-      Object.assign(product, changes);
+  async update(id: string, product: UpdateProductDto): Promise<Product> {
+    const updatedProduct = await this.productModel.findOneAndUpdate(
+      { _id: id },
+      { $set: { ...product } },
+      { new: true },
+    );
+    if (!updatedProduct) {
+      throw new NotFoundException(`Product #${id} not found`);
     }
-    return product;
+    return updatedProduct;
+  }
+  async delete(id: string): Promise<void> {
+    return await this.productModel.findByIdAndDelete({ _id: id });
   }
 }
