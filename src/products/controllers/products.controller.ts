@@ -13,8 +13,8 @@ import {
   FilterProductDto,
   UpdateProductDto,
 } from '../dtos/products.dtos';
-import { Product } from '../entities/product.entitie';
-import { ProductsService } from '../serivices/products.service';
+import { Product } from '../entities/product.entity';
+import { ProductsService } from '../services/products.service';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { MongoIdPipe } from 'src/common/mongo-id.pipe';
 

@@ -8,8 +8,9 @@ import {
   IsUrl,
   Min,
   ValidateIf,
+  ValidateNested,
 } from 'class-validator';
-
+import { CreateCategoryDto } from './category.dto';
 export class CreateProductDto {
   @ApiProperty()
   @IsNotEmpty()
@@ -36,6 +37,11 @@ export class CreateProductDto {
   @IsUrl()
   @IsNotEmpty()
   readonly image: string;
+
+  @IsNotEmpty()
+  @ValidateNested()
+  @ApiProperty()
+  readonly category: CreateCategoryDto;
 }
 export class UpdateProductDto extends PartialType(CreateProductDto) {} // OmitType(CreateProductDto, ['name']),
 

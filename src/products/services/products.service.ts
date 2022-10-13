@@ -6,7 +6,7 @@ import {
   UpdateProductDto,
   FilterProductDto,
 } from '../dtos/products.dtos';
-import { Product } from '../entities/product.entitie';
+import { Product } from '../entities/product.entity';
 
 @Injectable()
 export class ProductsService {
