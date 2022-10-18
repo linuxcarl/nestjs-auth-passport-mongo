@@ -3,9 +3,12 @@ import {
   IsNotEmpty,
   IsPhoneNumber,
   ValidateNested,
+  IsArray,
 } from 'class-validator';
 import { PartialType, ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
+import { Skills } from '../entities/skills.entity';
+import { SkillsDto } from './skills.dto';
 
 export class CreateCustomerDto {
   @ApiProperty()
@@ -23,20 +26,11 @@ export class CreateCustomerDto {
   @IsNotEmpty()
   readonly phone: string;
 
-  @ValidateNested()
-  @Type(() => Skills)
-  readonly skills: Skills[];
-}
-export class Skills {
-  // Sub clase para tipar los datos
   @IsNotEmpty()
-  tecnology: string;
-
-  @IsNotEmpty()
-  description: string;
-
-  @IsNotEmpty()
-  level: 'beginner' | 'intermediate' | 'advanced';
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => SkillsDto)
+  readonly skills: SkillsDto[];
 }
 
 export class UpdateCustomerDto extends PartialType(CreateCustomerDto) {}
