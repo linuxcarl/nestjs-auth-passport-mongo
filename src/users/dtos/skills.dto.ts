@@ -4,15 +4,15 @@ import { PartialType } from '@nestjs/swagger';
 export class SkillsDto {
   @IsString()
   @IsNotEmpty()
-  readonly tecnology: String;
+  readonly tecnology: string;
 
   @IsString()
   @IsNotEmpty()
-  readonly description: String;
+  readonly description: string;
 
   @IsString()
   @IsNotEmpty()
-  readonly level: String;
+  readonly level: string;
 }
 
 export class UpdateSkillsDto extends PartialType(SkillsDto) {}

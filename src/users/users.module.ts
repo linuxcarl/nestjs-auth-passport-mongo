@@ -6,6 +6,10 @@ import { UsersController } from './controllers/users.controller';
 import { ProductsModule } from '../products/products.module';
 import { Customer, CustomerSchema } from './entities/customer.entity';
 import { MongooseModule } from '@nestjs/mongoose';
+import { OrdersController } from './controllers/orders.controller';
+import { OrdersService } from './services/orders.service';
+import { User, UserSchema } from './entities/user.entity';
+import { Order, OrderSchema } from './entities/order.entity';
 
 @Module({
   imports: [
@@ -15,9 +19,18 @@ import { MongooseModule } from '@nestjs/mongoose';
         name: Customer.name,
         schema: CustomerSchema,
       },
+      ,
+      {
+        name: User.name,
+        schema: UserSchema,
+      },
+      {
+        name: Order.name,
+        schema: OrderSchema,
+      },
     ]),
   ],
-  controllers: [UsersController, CustomerController],
-  providers: [UsersService, CustomersService],
+  controllers: [UsersController, CustomerController, OrdersController],
+  providers: [UsersService, CustomersService, OrdersService],
 })
 export class UsersModule {}

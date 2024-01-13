@@ -7,7 +7,6 @@ import {
 } from 'class-validator';
 import { PartialType, ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
-import { Skills } from '../entities/skills.entity';
 import { SkillsDto } from './skills.dto';
 
 export class CreateCustomerDto {
