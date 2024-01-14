@@ -6,6 +6,7 @@ import { UsersModule } from './users/users.module';
 import { DatabaseModule } from './database/database.module';
 import { ConfigModule } from '@nestjs/config';
 import { environment } from '../envirnoments';
+import { AuthModule } from './auth/auth.module';
 import config_enviroments from './config_enviroments';
 import * as Joi from 'joi';
 
@@ -28,6 +29,7 @@ import * as Joi from 'joi';
         PORT: Joi.number().required(),
       }),
     }),
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
