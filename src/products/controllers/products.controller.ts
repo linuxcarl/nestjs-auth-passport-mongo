@@ -7,7 +7,6 @@ import {
   Post,
   Put,
   Query,
-  SetMetadata,
   UseGuards,
 } from '@nestjs/common';
 import {
@@ -20,6 +19,7 @@ import { ProductsService } from '../services/products.service';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { MongoIdPipe } from 'src/common/mongo-id.pipe';
 import { ApiKeyGuard } from 'src/auth/guards/api-key.guard';
+import { PublicRoute } from 'src/auth/decorators/public.decorator';
 
 @ApiTags('Products')
 @UseGuards(ApiKeyGuard)
@@ -32,7 +32,7 @@ export class ProductsController {
     return await this.productsService.findAll(params);
   }
   @Get(':id')
-  @SetMetadata('isPublic', true)
+  @PublicRoute()
   async getProduct(@Param('id', MongoIdPipe) id: string): Promise<Product> {
     return await this.productsService.findOne(id);
   }
