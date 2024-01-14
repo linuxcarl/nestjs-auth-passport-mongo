@@ -7,6 +7,7 @@ import {
   Post,
   Put,
   Query,
+  SetMetadata,
   UseGuards,
 } from '@nestjs/common';
 import {
@@ -31,6 +32,7 @@ export class ProductsController {
     return await this.productsService.findAll(params);
   }
   @Get(':id')
+  @SetMetadata('isPublic', true)
   async getProduct(@Param('id', MongoIdPipe) id: string): Promise<Product> {
     return await this.productsService.findOne(id);
   }
