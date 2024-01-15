@@ -23,7 +23,7 @@ export class UsersService {
     return this.userModel.findById(id, { __v: 0, password: 0 });
   }
   async findByEmail(email: string) {
-    return this.userModel.findOne({ email }, { __v: 0, password: 0 });
+    return this.userModel.findOne({ email }, { __v: 0 }).exec();
   }
 
   async getOrdersByUser(userId: string) {
