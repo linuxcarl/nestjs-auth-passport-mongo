@@ -10,10 +10,11 @@ export class AppService {
     @Inject(config_enviroments.KEY)
     private readonly configService: ConfigType<typeof config_enviroments>,
   ) {}
-  getHello(): string {
-    return `
-    \n- DB_NAME: ${this.configService.database.DB_NAME}
-    \n- DB_HOST: ${this.configService.database.DB_HOST}`;
+  getHello() {
+    return 'hello';
+    // return `
+    // \n- DB_NAME: ${this.configService.database.DB_NAME}
+    // \n- DB_HOST: ${this.configService.database.DB_HOST}`;
   }
   getTasks() {
     return this.database.collection('tasks').find().toArray();

@@ -8,10 +8,9 @@ import { MongooseModule } from '@nestjs/mongoose';
   imports: [
     MongooseModule.forRootAsync({
       useFactory: (configService: ConfigType<typeof config_enviroments>) => {
-        const { MONGO_BBDD, MONGO_CONF, MONGO_HOST, MONGO_PORT } =
-          configService.db_mongo;
+        const { MONGO_URI, MONGO_BBDD } = configService.db_mongo;
         return {
-          uri: `${MONGO_CONF}://${MONGO_HOST}:${MONGO_PORT}`,
+          uri: MONGO_URI,
           dbName: MONGO_BBDD,
         };
       },
@@ -24,16 +23,8 @@ import { MongooseModule } from '@nestjs/mongoose';
       useFactory: async (
         configService: ConfigType<typeof config_enviroments>,
       ) => {
-        const {
-          MONGO_BBDD,
-          MONGO_CONF,
-          MONGO_HOST,
-          MONGO_PORT,
-          // MONGO_PASS,
-          // MONGO_USER,
-        } = configService.db_mongo;
-        // const uriProd = `${MONGO_CONF}://${MONGO_USER}:${MONGO_PASS}@${MONGO_HOST}:${MONGO_PORT}/`;
-        const uri = `${MONGO_CONF}://${MONGO_HOST}:${MONGO_PORT}/`;
+        const { MONGO_URI, MONGO_BBDD } = configService.db_mongo;
+        const uri = MONGO_URI;
         const client = new MongoClient(uri);
         await client.connect();
         const database = client.db(MONGO_BBDD);

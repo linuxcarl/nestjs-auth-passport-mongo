@@ -11,11 +11,7 @@ export default registerAs('config', () => {
     },
     db_mongo: {
       MONGO_BBDD: process.env.MONGO_BBDD,
-      MONGO_CONF: process.env.MONGO_CONF,
-      MONGO_HOST: process.env.MONGO_HOST,
-      MONGO_PORT: parseInt(process.env.MONGO_PORT, 10),
-      MONGO_PASS: process.env.MONGO_PASS,
-      MONGO_USER: process.env.MONGO_USER,
+      MONGO_URI: process.env.MONGO_URI,
     },
     API_KEY: process.env.API_KEY,
     JWT_SECRET: process.env.JWT_SECRET,
