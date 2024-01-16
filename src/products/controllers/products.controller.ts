@@ -19,13 +19,14 @@ import { ProductsService } from '../services/products.service';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { MongoIdPipe } from 'src/common/mongo-id.pipe';
 import { PublicRoute } from 'src/auth/decorators/public.decorator';
-import { AuthGuard } from '@nestjs/passport';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 
 @ApiTags('Products')
-@UseGuards(AuthGuard('jwt'))
+@UseGuards(JwtAuthGuard)
 @Controller('products')
 export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
+  @PublicRoute()
   @ApiOperation({ summary: 'Get all products' })
   @Get()
   async getProducts(@Query() params: FilterProductDto): Promise<Product[]> {
