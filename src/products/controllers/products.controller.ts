@@ -18,11 +18,11 @@ import { Product } from '../entities/product.entity';
 import { ProductsService } from '../services/products.service';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { MongoIdPipe } from 'src/common/mongo-id.pipe';
-import { ApiKeyGuard } from 'src/auth/guards/api-key.guard';
 import { PublicRoute } from 'src/auth/decorators/public.decorator';
+import { AuthGuard } from '@nestjs/passport';
 
 @ApiTags('Products')
-@UseGuards(ApiKeyGuard)
+@UseGuards(AuthGuard('jwt'))
 @Controller('products')
 export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
